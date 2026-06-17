@@ -1,56 +1,65 @@
 # Sistema Simples de Vendas e Controle de Estoque
-Projeto desenvolvido para a disciplina de **Programação Orientada a Objetos**, com o objetivo de simular um sistema simples de vendas, cadastro de clientes, funcionários e produtos, além do controle de estoque e registro de vendas.
-## Descrição
-O sistema foi projetado para automatizar operações essenciais de uma loja, permitindo:
-- login de clientes e funcionários
-- cadastro e gerenciamento de clientes
+Projeto desenvolvido para a disciplina de **Programação Orientada a Objetos**, com foco na aplicação de conceitos como **herança, encapsulamento, composição, serialização e manipulação de coleções**, por meio da implementação de um sistema de vendas em ambiente de console.
+O sistema permite o gerenciamento de **clientes, funcionários, produtos e vendas**, além de realizar **controle de estoque**, **registro de pagamentos**, **devoluções** e **suspensão temporária de clientes inadimplentes**.
+---
+## Visão geral
+O projeto simula o funcionamento básico de uma loja, oferecendo operações essenciais para cadastro, consulta e controle das entidades do sistema.
+Entre os principais recursos implementados, estão:
+- autenticação de clientes e funcionários
+- diferenciação entre funcionários comuns e gerentes
+- cadastro e manutenção de clientes
 - cadastro e gerenciamento de produtos
 - cadastro e gerenciamento de funcionários
-- registro de vendas
+- registro de vendas com múltiplos itens
+- cálculo automático do valor total da venda
 - controle de pagamento
-- devolução de vendas
-- controle de suspensão de clientes inadimplentes
+- devolução de vendas com atualização do estoque
 - persistência de dados em arquivos `.dat`
-O sistema funciona em modo texto, por meio de menus no terminal.
+Toda a interação é realizada por meio de **menus no terminal**, organizando o fluxo de uso do sistema de forma simples e objetiva.
+---
 ## Funcionalidades
 ### Clientes
 - criar conta de cliente
-- login de cliente
+- realizar login
 - visualizar dados cadastrais
-- editar dados
-- listar clientes
+- editar informações
+- listar clientes cadastrados
 - desativar cliente
 - listar clientes suspensos
 - visualizar compras realizadas
 ### Funcionários
-- login de funcionário
-- cadastro de funcionários
-- listagem de funcionários
-- distinção entre funcionário comum e gerente
+- realizar login
+- cadastrar funcionários
+- listar funcionários
+- distinguir funcionários comuns de gerentes
 ### Produtos
-- cadastro de produtos
-- listagem de produtos
-- edição de produtos
-- exclusão lógica de produtos
-- controle de estoque
-- listagem de produtos sem estoque
+- cadastrar produtos
+- listar produtos
+- editar produtos
+- excluir logicamente produtos
+- adicionar e remover estoque
+- listar produtos sem estoque
 ### Vendas
-- registro de venda
-- adição de itens à venda
-- cálculo automático do total
-- registro de pagamento
-- registro de devolução
-- listagem de vendas
-- visualização de compras por cliente
+- registrar vendas
+- adicionar itens à venda
+- calcular subtotal por item
+- calcular total da venda
+- registrar pagamento
+- registrar devolução
+- listar vendas
+- listar compras de um cliente
+---
 ## Regras de negócio
-- qualquer pessoa que queira comprar precisa estar cadastrada como cliente
-- usuários não são excluídos fisicamente, apenas desativados
-- apenas funcionários gerentes podem gerenciar produtos e funcionários
-- clientes suspensos não podem realizar compras
-- uma venda sem pagamento gera suspensão de 15 dias para o cliente
-- após o prazo da suspensão, o cliente volta a poder comprar
-- a devolução de uma venda devolve os itens ao estoque
-- o sistema cria um gerente padrão automaticamente caso não existam funcionários cadastrados
+O sistema segue as seguintes regras:
+- qualquer pessoa que deseje comprar deve estar cadastrada como cliente
+- usuários não são removidos definitivamente, apenas desativados
+- apenas funcionários com perfil de gerente podem gerenciar produtos e funcionários
+- clientes suspensos não podem realizar novas compras
+- vendas não pagas geram suspensão de 15 dias para o cliente responsável
+- após o prazo da suspensão, o cliente volta a ficar apto para comprar
+- devoluções retornam os produtos ao estoque
+- caso não exista nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão
+---
 ## Estrutura do projeto
 ```text
 src/
@@ -67,9 +76,9 @@ src/
         │   └── Persistencia.java
         └── view/
             └── Menu.java
-Classes principais
+Organização das classes
 Usuario
-Classe abstrata base do sistema. Contém informações comuns como:
+Classe abstrata base do sistema. Reúne os atributos e comportamentos comuns aos usuários:
 
 nome
 cpf
@@ -78,20 +87,20 @@ email
 senha
 status de ativação
 Cliente
-Herda de Usuario e adiciona:
+Especialização de Usuario que representa os clientes da loja. Possui:
 
 id
 endereço
 telefone
-suspensão
+status de suspensão
 data de fim da suspensão
 Funcionario
-Herda de Usuario e adiciona:
+Especialização de Usuario responsável por representar os funcionários do sistema. Possui:
 
 id
 indicador de gerente
 Produto
-Representa os produtos da loja, contendo:
+Representa os produtos comercializados pela loja, contendo:
 
 id
 nome
@@ -100,13 +109,13 @@ categoria
 quantidade em estoque
 preço
 ItemVenda
-Representa cada item de uma venda, contendo:
+Representa cada item associado a uma venda, contendo:
 
 produto
 quantidade
-subtotal calculado
+cálculo de subtotal
 Venda
-Representa a venda realizada no sistema, contendo:
+Representa uma venda registrada no sistema, contendo:
 
 id
 data da venda
@@ -114,34 +123,42 @@ status de pagamento
 status de devolução
 cliente
 funcionário
-lista de itens
+lista de itens vendidos
 Persistencia
-Responsável por salvar e carregar os dados em arquivos .dat.
+Classe utilitária responsável por salvar e carregar os dados serializados em arquivos .dat.
 
 Menu
-Classe principal do sistema, responsável pela interação com o usuário via terminal.
+Classe responsável pela execução principal do sistema e pela interação com o usuário por meio do terminal.
 
 Persistência de dados
-Os dados do sistema são armazenados localmente em arquivos:
+As informações do sistema são armazenadas em arquivos locais, permitindo que os dados permaneçam disponíveis entre diferentes execuções.
+
+Arquivos utilizados:
 
 clientes.dat
 produtos.dat
 funcionarios.dat
 vendas.dat
-Esses arquivos permitem manter as informações entre diferentes execuções do programa.
+Tecnologias e conceitos aplicados
+Este projeto utiliza:
 
-Tecnologias utilizadas
 Java
 Programação Orientada a Objetos
+Herança
+Encapsulamento
+Composição
 Serialização de objetos
 Persistência em arquivos
-Interface via terminal
+Estruturas de repetição e decisão
+Interface textual via terminal
 Como executar
 Pré-requisitos
+Para executar o projeto, é necessário ter:
+
 Java instalado
-compilador Java disponível no ambiente
+JDK configurado no ambiente, para compilação do projeto
 Compilação
-No terminal, dentro da pasta do projeto, compile os arquivos .java com um comando compatível com a estrutura do projeto.
+No terminal, dentro da raiz do projeto, compile os arquivos com um comando compatível com a estrutura de pacotes.
 
 Exemplo:
 
@@ -150,21 +167,21 @@ bash
 
 javac -d bin src/br/vendas/model/*.java src/br/vendas/util/*.java src/br/vendas/view/*.java
 Execução
-Depois de compilar, execute a classe principal:
+Após a compilação, execute a aplicação com:
 
 bash
 
 
 java -cp bin br.vendas.view.Menu
-Login inicial do sistema
-Caso não exista nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão com os seguintes dados:
+Acesso inicial
+Se não existir nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão com as seguintes credenciais:
 
 text
 
 
 Login: admin
 Senha: admin
-Exemplo de uso
+Exemplo de fluxo de uso
 iniciar o sistema
 entrar como funcionário
 acessar com o login do gerente padrão
@@ -172,7 +189,7 @@ cadastrar produtos
 cadastrar clientes
 registrar vendas
 registrar pagamento ou inadimplência
-consultar vendas, produtos e clientes
+consultar clientes, produtos e vendas
 Equipe
 Gerislan da Silva Araujo
 José Veríssimo de Oliveira Queiroz
@@ -180,3 +197,8 @@ Paulo Henrique Souza Lima
 Disciplina
 PEX0130 - Programação Orientada a Objetos
 Universidade Federal Rural do Semi-Árido - Campus Pau dos Ferros
+
+Considerações finais
+Este projeto foi desenvolvido com finalidade acadêmica, buscando colocar em prática os principais fundamentos da Programação Orientada a Objetos em um cenário aplicado de vendas e controle de estoque.
+
+Além de atender aos requisitos propostos, a implementação também serve como base para futuras melhorias, como ampliação das validações, refinamento da navegação por menus e evolução da organização interna do código.
