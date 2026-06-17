@@ -1,214 +1,202 @@
-# 🛒 Sistema Simples de Vendas e Controle de Estoque
+# 🐣 Chocadeira F1800 — Tecnologia Acessível no Campo
 
-Projeto desenvolvido para a disciplina de **Programação Orientada a Objetos**, com foco na aplicação de conceitos como **herança, encapsulamento, composição, serialização e manipulação de coleções**, por meio da implementação de um sistema de vendas em ambiente de console.
-
-O sistema permite o gerenciamento de **clientes, funcionários, produtos e vendas**, além de realizar **controle de estoque**, **registro de pagamentos**, **devoluções** e **suspensão temporária de clientes inadimplentes**.
-
----
-
-## 📋 Visão geral
-
-O projeto simula o funcionamento básico de uma loja, oferecendo operações essenciais para cadastro, consulta e controle das entidades do sistema.
-
-Entre os principais recursos implementados, estão:
-
-- autenticação de clientes e funcionários
-- diferenciação entre funcionários comuns e gerentes
-- cadastro e manutenção de clientes
-- cadastro e gerenciamento de produtos
-- cadastro e gerenciamento de funcionários
-- registro de vendas com múltiplos itens
-- cálculo automático do valor total da venda
-- controle de pagamento
-- devolução de vendas com atualização do estoque
-- persistência de dados em arquivos `.dat`
-
-Toda a interação é realizada por meio de **menus no terminal**, organizando o fluxo de uso do sistema de forma simples e objetiva.
+> Trabalho de Conclusão de Curso — Bacharelado Interdisciplinar em Ciência e Tecnologia  
+> Universidade Federal Rural do Semi-Árido (UFERSA) — Campus Pau dos Ferros  
+> **Autor:** José Veríssimo de Oliveira Queiroz  
+> **Orientador:** Prof. Dr. Pedro Thiago Valério de Souza  
+> **Defendido em:** 04 de agosto de 2025
 
 ---
 
-## ✅ Funcionalidades
+## 📖 Sobre o Projeto
 
-### Clientes
-- criar conta de cliente
-- realizar login
-- visualizar dados cadastrais
-- editar informações
-- listar clientes cadastrados
-- desativar cliente
-- listar clientes suspensos
-- visualizar compras realizadas
+Este projeto propõe o desenvolvimento de uma **chocadeira automatizada de baixo custo** com controle térmico baseado na plataforma Arduino, voltada para atender às necessidades de pequenos produtores rurais, especialmente no contexto da agricultura familiar do semiárido nordestino.
 
-### Funcionários
-- realizar login
-- cadastrar funcionários
-- listar funcionários
-- distinguir funcionários comuns de gerentes
+A proposta surgiu da constatação de que cerca de 77% dos estabelecimentos agropecuários brasileiros são de base familiar (IBGE, 2022), e que chocadeiras comerciais automatizadas têm custo entre R$ 450,00 e R$ 800,00 — valor inacessível para grande parte desses produtores. O protótipo desenvolvido neste trabalho foi construído por aproximadamente **R$ 215,50**, utilizando componentes acessíveis e estrutura em madeira compensada.
 
-### Produtos
-- cadastrar produtos
-- listar produtos
-- editar produtos
-- excluir logicamente produtos
-- adicionar e remover estoque
-- listar produtos sem estoque
-
-### Vendas
-- registrar vendas
-- adicionar itens à venda
-- calcular subtotal por item
-- calcular total da venda
-- registrar pagamento
-- registrar devolução
-- listar vendas
-- listar compras de um cliente
+Além da aplicação prática no campo, o projeto possui forte potencial educacional, podendo ser utilizado em escolas técnicas e universidades como ferramenta didática em disciplinas de eletrônica, automação e IoT.
 
 ---
 
-## 📐 Regras de negócio
+## ⚙️ Funcionalidades
 
-O sistema segue as seguintes regras:
-
-- qualquer pessoa que deseje comprar deve estar cadastrada como cliente
-- usuários não são removidos definitivamente, apenas desativados
-- apenas funcionários com perfil de gerente podem gerenciar produtos e funcionários
-- clientes suspensos não podem realizar novas compras
-- vendas não pagas geram suspensão de 15 dias para o cliente responsável
-- após o prazo da suspensão, o cliente volta a ficar apto para comprar
-- devoluções retornam os produtos ao estoque
-- caso não exista nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão
+* Monitoramento contínuo de **temperatura** e **umidade** via sensor DHT22
+* Controle automático do relé com **lógica de histerese** (liga em ≤37°C, desliga em ≥38°C)
+* Exibição em tempo real no **display LCD 20x4**: temperatura, umidade, estado da lâmpada e horário
+* **Contagem regressiva** dos dias até o fim da incubação (21 dias)
+* Aviso de **rotação dos ovos** a cada 5 horas exibido no display
+* **LEDs indicadores**: verde (lâmpada ligada), vermelho (lâmpada desligada) e amarelo (alerta de umidade fora da faixa)
+* **Ovoscopia** acionada por botão físico
+* Verificação de erro no sensor DHT22 e no módulo RTC com exibição de mensagem no LCD
 
 ---
 
-## 🗂️ Estrutura do projeto
+## 🛠️ Hardware Utilizado
 
-```text
-src/
-└── br/
-    └── vendas/
-        ├── model/
-        │   ├── Usuario.java
-        │   ├── Cliente.java
-        │   ├── Funcionario.java
-        │   ├── Produto.java
-        │   ├── ItemVenda.java
-        │   └── Venda.java
-        ├── util/
-        │   └── Persistencia.java
-        └── view/
-            └── Menu.java
-```
-
-### Organização das classes
-
-**`Usuario`** — Classe abstrata base do sistema. Reúne os atributos e comportamentos comuns aos usuários: nome, CPF, login, e-mail, senha e status de ativação.
-
-**`Cliente`** — Especialização de `Usuario` que representa os clientes da loja. Possui: ID, endereço, telefone, status de suspensão e data de fim da suspensão.
-
-**`Funcionario`** — Especialização de `Usuario` responsável por representar os funcionários do sistema. Possui: ID e indicador de gerente.
-
-**`Produto`** — Representa os produtos comercializados pela loja, contendo: ID, nome, descrição, categoria, quantidade em estoque e preço.
-
-**`ItemVenda`** — Representa cada item associado a uma venda, contendo: produto, quantidade e cálculo de subtotal.
-
-**`Venda`** — Representa uma venda registrada no sistema, contendo: ID, data da venda, status de pagamento, status de devolução, cliente, funcionário e lista de itens vendidos.
-
-**`Persistencia`** — Classe utilitária responsável por salvar e carregar os dados serializados em arquivos `.dat`.
-
-**`Menu`** — Classe responsável pela execução principal do sistema e pela interação com o usuário por meio do terminal.
+| Componente | Quantidade | Valor (R$) |
+|---|---|---|
+| Arduino Uno R3 | 1 | 40,00 |
+| Sensor DHT22 | 1 | 21,89 |
+| Ventoinha | 1 | 11,73 |
+| Lâmpada Incandescente | 2 | 3,64 |
+| Lâmpada LED | 1 | 12,90 |
+| Bocais | 3 | 8,70 |
+| Fonte Chaveada 12V | 1 | 31,15 |
+| Módulo Relé 4 canais | 1 | 27,00 |
+| Display LCD 20x4 | 1 | 24,00 |
+| Protoboard | 1 | 12,49 |
+| Plug macho | 1 | 2,00 |
+| Fios 1mm² | 10m | 20,00 |
+| **Total** | | **R$ 215,50** |
 
 ---
 
-## 💾 Persistência de dados
+## 📌 Mapeamento de Pinos
 
-As informações do sistema são armazenadas em arquivos locais, permitindo que os dados permaneçam disponíveis entre diferentes execuções.
-
-Arquivos utilizados:
-
-| Arquivo | Conteúdo |
+| Pino | Componente |
 |---|---|
-| `clientes.dat` | Dados dos clientes cadastrados |
-| `funcionarios.dat` | Dados dos funcionários cadastrados |
-| `produtos.dat` | Dados dos produtos cadastrados |
-| `vendas.dat` | Histórico de vendas registradas |
+| 13 | DHT22 (dados) |
+| A3 | Relé principal (lâmpadas + ventoinha) |
+| 8 | Botão de ovoscopia |
+| 9 | Lâmpada de ovoscopia |
+| 10 | LED verde (lâmpadas ligadas) |
+| 11 | LED vermelho (lâmpadas desligadas) |
+| A1 | LED amarelo (alerta de umidade) |
+| 7, 6, 5, 4, 3, 2 | LCD (RS, E, D4, D5, D6, D7) |
 
 ---
 
-## 🛠️ Tecnologias e conceitos aplicados
+## 📚 Bibliotecas Necessárias
 
-- **Java**
-- Programação Orientada a Objetos
-- Herança e Encapsulamento
-- Composição
-- Serialização de objetos
-- Persistência em arquivos
-- Interface textual via terminal
+Instale pela Arduino IDE em **Sketch → Include Library → Manage Libraries**:
 
----
-
-## ▶️ Como executar
-
-### Pré-requisitos
-
-- Java instalado
-- JDK configurado no ambiente
-
-### Compilação
-
-No terminal, dentro da raiz do projeto, execute:
-
-```bash
-javac -d bin src/br/vendas/model/*.java src/br/vendas/util/*.java src/br/vendas/view/*.java
-```
-
-### Execução
-
-```bash
-java -cp bin br.vendas.view.Menu
-```
-
-### Acesso inicial
-
-Se não existir nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão:
-
-```
-Login: admin
-Senha: admin
-```
-
-### Exemplo de fluxo de uso
-
-1. Iniciar o sistema
-2. Entrar como funcionário com as credenciais do gerente padrão
-3. Cadastrar produtos
-4. Cadastrar clientes
-5. Registrar vendas
-6. Registrar pagamento ou inadimplência
-7. Consultar clientes, produtos e vendas
-
----
-
-## 👥 Equipe
-
-| Nome | Matrícula |
+| Biblioteca | Autor |
 |---|---|
-| Gerislan da Silva Araujo | — |
-| José Veríssimo de Oliveira Queiroz | — |
-| Paulo Henrique Souza Lima | — |
+| DHT sensor library | Adafruit |
+| RTClib | Adafruit |
+| LiquidCrystal | Built-in (já inclusa na IDE) |
 
 ---
 
-## 🎓 Informações acadêmicas
+## ⚙️ Como Usar
 
-**Disciplina:** PEX0130 — Programação Orientada a Objetos  
-**Instituição:** Universidade Federal Rural do Semi-Árido — Campus Pau dos Ferros
+1. Clone este repositório
+2. Instale as bibliotecas listadas acima
+3. Abra o arquivo `CodigoFonte/CodigoFonte.ino` na Arduino IDE
+4. Ajuste a data e hora de início da incubação na linha:
+   ```cpp
+   DateTime inicioIncubacao(2025, 8, 4, 15, 0, 0);
+   ```
+5. Faça o upload para o Arduino
+6. Conecte os componentes conforme o mapeamento de pinos acima
 
 ---
 
-## 💡 Considerações finais
+## 🌡️ Parâmetros de Incubação
 
-Este projeto foi desenvolvido com finalidade acadêmica, como exercício prático dos principais fundamentos da Programação Orientada a Objetos aplicados a um cenário real de vendas e controle de estoque.
+| Parâmetro | Faixa Ideal |
+|---|---|
+| Temperatura | 37°C a 38°C |
+| Umidade relativa | 55% a 65% |
+| Período de incubação | 21 dias |
+| Rotação dos ovos | A cada 5 horas (manual) |
 
-O sistema cobre com solidez os requisitos propostos e, ao mesmo tempo, serve como ponto de partida para evoluções futuras — seja no refinamento das validações, na melhoria da navegação pelos menus, ou na migração para uma interface gráfica ou web. A estrutura orientada a objetos adotada facilita essas expansões sem comprometer a base já construída.
+---
 
-> _"Todo sistema começa pequeno. O que importa é que a fundação seja sólida."_
+## 📊 Resultados Obtidos
+
+O sistema foi testado em três períodos do dia com os seguintes tempos médios de acionamento da lâmpada:
+
+| Período | Lâmpada Ligada | Lâmpada Desligada |
+|---|---|---|
+| Manhã | 3,22 min | 3,78 min |
+| Tarde | 4,14 min | 5,14 min |
+| Noite | 4,00 min | 4,38 min |
+
+Em todos os períodos, o tempo desligada foi superior ao tempo ligada, indicando boa eficiência do controle térmico. A temperatura se manteve estável dentro da faixa ideal durante os testes.
+
+O consumo energético estimado para um ciclo completo de 21 dias foi de **R$ 12,65** na tarifa convencional e **R$ 5,18** na tarifa baixa renda.
+
+---
+
+## 🔮 Trabalhos Futuros
+
+* Rotação automática dos ovos via motor
+* Controle automático da umidade
+* Integração com plataformas IoT (Blynk, ThingSpeak) para monitoramento remoto
+* Alarmes sonoros para falhas de temperatura
+* Dashboard interativo com histórico de dados
+
+---
+
+## 📁 Estrutura do Repositório
+
+```
+chocadeira-f1800/
+├── CodigoFonte/
+│   └── CodigoFonte.ino
+├── assets/
+│   ├── FrenteFechada.jpeg
+│   ├── FrenteDaChocadeiraAberta.jpeg
+│   ├── FrenteDaChocadeira2.jpeg
+│   ├── Display.jpeg
+│   ├── ParteInternaSuperior.jpeg
+│   ├── ParteInternaComLuz.jpeg
+│   ├── TampaSuperiorAberta.jpeg
+│   ├── ObjetoParaRolagem.jpeg
+│   ├── LateraldoCircuito.jpeg
+│   ├── CircuitoMontado.jpeg
+│   ├── CircuitoMontado2.jpeg
+│   └── FrenteEmConstrução.jpeg
+└── README.md
+```
+
+---
+
+## 📸 Galeria
+
+### Chocadeira finalizada — vista frontal fechada
+![Frente fechada](assets/FrenteFechada.jpeg)
+
+### Frente aberta com bandeja e sensor DHT22 visível
+![Frente aberta](assets/FrenteDaChocadeiraAberta.jpeg)
+
+### Vista frontal alternativa
+![Frente alternativa](assets/FrenteDaChocadeira2.jpeg)
+
+### Painel de controle — display LCD 20x4 e LEDs indicadores
+![Display e LEDs](assets/Display.jpeg)
+
+### Parte interna superior — lâmpadas, ventoinha e sensor DHT22
+![Parte interna superior](assets/ParteInternaSuperior.jpeg)
+
+### Parte interna com lâmpadas acesas
+![Parte interna com luz](assets/ParteInternaComLuz.jpeg)
+
+### Tampa superior aberta — soquetes e bandeja de rolagem
+![Tampa superior aberta](assets/TampaSuperiorAberta.jpeg)
+
+### Bandeja de rolagem com canos de PVC
+![Objeto para rolagem](assets/ObjetoParaRolagem.jpeg)
+
+### Lateral do circuito — Arduino, relé, fonte e fiação
+![Lateral do circuito](assets/LateraldoCircuito.jpeg)
+
+### Circuito montado
+![Circuito montado](assets/CircuitoMontado.jpeg)
+
+### Circuito montado — visão alternativa
+![Circuito montado 2](assets/CircuitoMontado2.jpeg)
+
+### Em construção — fase inicial da montagem
+![Em construção](assets/FrenteEmConstrução.jpeg)
+
+---
+
+## 👨‍💻 Autor
+
+**José Veríssimo de Oliveira Queiroz**
+
+Bacharelado Interdisciplinar em Ciência e Tecnologia — UFERSA, Pau dos Ferros/RN  
+📧 jose54143@gmail.com
+📱 (84) 92144-5170
