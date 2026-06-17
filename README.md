@@ -1,10 +1,17 @@
-# Sistema Simples de Vendas e Controle de Estoque
+# 🛒 Sistema Simples de Vendas e Controle de Estoque
+
 Projeto desenvolvido para a disciplina de **Programação Orientada a Objetos**, com foco na aplicação de conceitos como **herança, encapsulamento, composição, serialização e manipulação de coleções**, por meio da implementação de um sistema de vendas em ambiente de console.
+
 O sistema permite o gerenciamento de **clientes, funcionários, produtos e vendas**, além de realizar **controle de estoque**, **registro de pagamentos**, **devoluções** e **suspensão temporária de clientes inadimplentes**.
+
 ---
-## Visão geral
+
+## 📋 Visão geral
+
 O projeto simula o funcionamento básico de uma loja, oferecendo operações essenciais para cadastro, consulta e controle das entidades do sistema.
+
 Entre os principais recursos implementados, estão:
+
 - autenticação de clientes e funcionários
 - diferenciação entre funcionários comuns e gerentes
 - cadastro e manutenção de clientes
@@ -15,9 +22,13 @@ Entre os principais recursos implementados, estão:
 - controle de pagamento
 - devolução de vendas com atualização do estoque
 - persistência de dados em arquivos `.dat`
+
 Toda a interação é realizada por meio de **menus no terminal**, organizando o fluxo de uso do sistema de forma simples e objetiva.
+
 ---
-## Funcionalidades
+
+## ✅ Funcionalidades
+
 ### Clientes
 - criar conta de cliente
 - realizar login
@@ -27,11 +38,13 @@ Toda a interação é realizada por meio de **menus no terminal**, organizando o
 - desativar cliente
 - listar clientes suspensos
 - visualizar compras realizadas
+
 ### Funcionários
 - realizar login
 - cadastrar funcionários
 - listar funcionários
 - distinguir funcionários comuns de gerentes
+
 ### Produtos
 - cadastrar produtos
 - listar produtos
@@ -39,6 +52,7 @@ Toda a interação é realizada por meio de **menus no terminal**, organizando o
 - excluir logicamente produtos
 - adicionar e remover estoque
 - listar produtos sem estoque
+
 ### Vendas
 - registrar vendas
 - adicionar itens à venda
@@ -48,9 +62,13 @@ Toda a interação é realizada por meio de **menus no terminal**, organizando o
 - registrar devolução
 - listar vendas
 - listar compras de um cliente
+
 ---
-## Regras de negócio
+
+## 📐 Regras de negócio
+
 O sistema segue as seguintes regras:
+
 - qualquer pessoa que deseje comprar deve estar cadastrada como cliente
 - usuários não são removidos definitivamente, apenas desativados
 - apenas funcionários com perfil de gerente podem gerenciar produtos e funcionários
@@ -59,8 +77,11 @@ O sistema segue as seguintes regras:
 - após o prazo da suspensão, o cliente volta a ficar apto para comprar
 - devoluções retornam os produtos ao estoque
 - caso não exista nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão
+
 ---
-## Estrutura do projeto
+
+## 🗂️ Estrutura do projeto
+
 ```text
 src/
 └── br/
@@ -76,129 +97,118 @@ src/
         │   └── Persistencia.java
         └── view/
             └── Menu.java
-Organização das classes
-Usuario
-Classe abstrata base do sistema. Reúne os atributos e comportamentos comuns aos usuários:
+```
 
-nome
-cpf
-login
-email
-senha
-status de ativação
-Cliente
-Especialização de Usuario que representa os clientes da loja. Possui:
+### Organização das classes
 
-id
-endereço
-telefone
-status de suspensão
-data de fim da suspensão
-Funcionario
-Especialização de Usuario responsável por representar os funcionários do sistema. Possui:
+**`Usuario`** — Classe abstrata base do sistema. Reúne os atributos e comportamentos comuns aos usuários: nome, CPF, login, e-mail, senha e status de ativação.
 
-id
-indicador de gerente
-Produto
-Representa os produtos comercializados pela loja, contendo:
+**`Cliente`** — Especialização de `Usuario` que representa os clientes da loja. Possui: ID, endereço, telefone, status de suspensão e data de fim da suspensão.
 
-id
-nome
-descrição
-categoria
-quantidade em estoque
-preço
-ItemVenda
-Representa cada item associado a uma venda, contendo:
+**`Funcionario`** — Especialização de `Usuario` responsável por representar os funcionários do sistema. Possui: ID e indicador de gerente.
 
-produto
-quantidade
-cálculo de subtotal
-Venda
-Representa uma venda registrada no sistema, contendo:
+**`Produto`** — Representa os produtos comercializados pela loja, contendo: ID, nome, descrição, categoria, quantidade em estoque e preço.
 
-id
-data da venda
-status de pagamento
-status de devolução
-cliente
-funcionário
-lista de itens vendidos
-Persistencia
-Classe utilitária responsável por salvar e carregar os dados serializados em arquivos .dat.
+**`ItemVenda`** — Representa cada item associado a uma venda, contendo: produto, quantidade e cálculo de subtotal.
 
-Menu
-Classe responsável pela execução principal do sistema e pela interação com o usuário por meio do terminal.
+**`Venda`** — Representa uma venda registrada no sistema, contendo: ID, data da venda, status de pagamento, status de devolução, cliente, funcionário e lista de itens vendidos.
 
-Persistência de dados
+**`Persistencia`** — Classe utilitária responsável por salvar e carregar os dados serializados em arquivos `.dat`.
+
+**`Menu`** — Classe responsável pela execução principal do sistema e pela interação com o usuário por meio do terminal.
+
+---
+
+## 💾 Persistência de dados
+
 As informações do sistema são armazenadas em arquivos locais, permitindo que os dados permaneçam disponíveis entre diferentes execuções.
 
 Arquivos utilizados:
 
-clientes.dat
-produtos.dat
-funcionarios.dat
-vendas.dat
-Tecnologias e conceitos aplicados
-Este projeto utiliza:
+| Arquivo | Conteúdo |
+|---|---|
+| `clientes.dat` | Dados dos clientes cadastrados |
+| `funcionarios.dat` | Dados dos funcionários cadastrados |
+| `produtos.dat` | Dados dos produtos cadastrados |
+| `vendas.dat` | Histórico de vendas registradas |
 
-Java
-Programação Orientada a Objetos
-Herança
-Encapsulamento
-Composição
-Serialização de objetos
-Persistência em arquivos
-Estruturas de repetição e decisão
-Interface textual via terminal
-Como executar
-Pré-requisitos
-Para executar o projeto, é necessário ter:
+---
 
-Java instalado
-JDK configurado no ambiente, para compilação do projeto
-Compilação
-No terminal, dentro da raiz do projeto, compile os arquivos com um comando compatível com a estrutura de pacotes.
+## 🛠️ Tecnologias e conceitos aplicados
 
-Exemplo:
+- **Java**
+- Programação Orientada a Objetos
+- Herança e Encapsulamento
+- Composição
+- Serialização de objetos
+- Persistência em arquivos
+- Interface textual via terminal
 
-bash
+---
 
+## ▶️ Como executar
 
+### Pré-requisitos
+
+- Java instalado
+- JDK configurado no ambiente
+
+### Compilação
+
+No terminal, dentro da raiz do projeto, execute:
+
+```bash
 javac -d bin src/br/vendas/model/*.java src/br/vendas/util/*.java src/br/vendas/view/*.java
-Execução
-Após a compilação, execute a aplicação com:
+```
 
-bash
+### Execução
 
-
+```bash
 java -cp bin br.vendas.view.Menu
-Acesso inicial
-Se não existir nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão com as seguintes credenciais:
+```
 
-text
+### Acesso inicial
 
+Se não existir nenhum funcionário cadastrado, o sistema cria automaticamente um gerente padrão:
 
+```
 Login: admin
 Senha: admin
-Exemplo de fluxo de uso
-iniciar o sistema
-entrar como funcionário
-acessar com o login do gerente padrão
-cadastrar produtos
-cadastrar clientes
-registrar vendas
-registrar pagamento ou inadimplência
-consultar clientes, produtos e vendas
-Equipe
-Gerislan da Silva Araujo
-José Veríssimo de Oliveira Queiroz
-Paulo Henrique Souza Lima
-Disciplina
-PEX0130 - Programação Orientada a Objetos
-Universidade Federal Rural do Semi-Árido - Campus Pau dos Ferros
+```
 
-Considerações finais
-Este projeto foi desenvolvido com finalidade acadêmica, buscando colocar em prática os principais fundamentos da Programação Orientada a Objetos em um cenário aplicado de vendas e controle de estoque.
+### Exemplo de fluxo de uso
 
-Além de atender aos requisitos propostos, a implementação também serve como base para futuras melhorias, como ampliação das validações, refinamento da navegação por menus e evolução da organização interna do código.
+1. Iniciar o sistema
+2. Entrar como funcionário com as credenciais do gerente padrão
+3. Cadastrar produtos
+4. Cadastrar clientes
+5. Registrar vendas
+6. Registrar pagamento ou inadimplência
+7. Consultar clientes, produtos e vendas
+
+---
+
+## 👥 Equipe
+
+| Nome | Matrícula |
+|---|---|
+| Gerislan da Silva Araujo | — |
+| José Veríssimo de Oliveira Queiroz | — |
+| Paulo Henrique Souza Lima | — |
+
+---
+
+## 🎓 Informações acadêmicas
+
+**Disciplina:** PEX0130 — Programação Orientada a Objetos  
+**Instituição:** Universidade Federal Rural do Semi-Árido — Campus Pau dos Ferros
+
+---
+
+## 💡 Considerações finais
+
+Este projeto foi desenvolvido com finalidade acadêmica, como exercício prático dos principais fundamentos da Programação Orientada a Objetos aplicados a um cenário real de vendas e controle de estoque.
+
+O sistema cobre com solidez os requisitos propostos e, ao mesmo tempo, serve como ponto de partida para evoluções futuras — seja no refinamento das validações, na melhoria da navegação pelos menus, ou na migração para uma interface gráfica ou web. A estrutura orientada a objetos adotada facilita essas expansões sem comprometer a base já construída.
+
+> _"Todo sistema começa pequeno. O que importa é que a fundação seja sólida."_
